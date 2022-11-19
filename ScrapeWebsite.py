@@ -2,7 +2,6 @@ import requests
 from bs4 import BeautifulSoup
 import json
 import pandas as pd
-import string
 
 def scrape_country(country, url):
     
@@ -50,6 +49,11 @@ def scrape_country(country, url):
     
     URL1 = "https://www.worldometers.info/coronavirus/"
     URL2 = "https://www.nytimes.com/interactive/2021/world/covid-cases.html"
+    
+    URL_list = [URL1, URL2]
+    
+    if url not in URL_list:
+        raise ValueError("The given url is not an acceptable parameter for this function. Please choose a website from the URL list.")
     
     if (url == URL1):
         # Request the website and organize the html into readable data. Find the table in the html.
