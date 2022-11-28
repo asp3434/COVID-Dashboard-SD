@@ -2,6 +2,8 @@ import requests
 from bs4 import BeautifulSoup
 import json
 import pandas as pd
+ 
+# comment
 
 def scrape_country(country, url):
     
@@ -91,4 +93,6 @@ def scrape_country(country, url):
         
     # r2 = requests.get(URL2)
     # soup2 = BeautifulSoup(r2.text, 'html.parser')
+
+scrape_country('usa', "https://www.worldometers.info/coronavirus/")
     
