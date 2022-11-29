@@ -14,6 +14,7 @@ Italy_deaths = [21000, 21100, 21500]
 
 #practice commit
 #practice commit 2nd try
+#committing from laptop as well
 
 # create a new plot with a title and axis labels
 p = figure(title="# Deaths vs Days",
