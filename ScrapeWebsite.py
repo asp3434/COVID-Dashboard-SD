@@ -2,9 +2,10 @@ import requests
 from bs4 import BeautifulSoup
 import json
 import pandas as pd
+from datetime import date
  
 
-def scrape_country(country, url):
+def scrape_country(country: str, url:str):
     
     country = country.lower()
     
@@ -15,6 +16,8 @@ def scrape_country(country, url):
     elif country == "united states of america":
         country = "usa"
     elif country == "us":
+        country = "usa"
+    elif country == "u.s.a.":
         country = "usa"
           
     elif country == "north korea":
@@ -36,9 +39,13 @@ def scrape_country(country, url):
     elif country ==  "great britain":
         country = "uk"
     elif country ==  "england":
+        country = "uk"
+    elif country == "u.k.":
         country = "uk"     
         
     elif country == "united arab emirates":
+        country = "uae"
+    elif country == "u.a.e.":
         country = "uae"
         
     elif country == "democratic republic of the congo":
@@ -49,9 +56,9 @@ def scrape_country(country, url):
     #################################################    
     
     URL1 = "https://www.worldometers.info/coronavirus/"
-    URL2 = "https://www.nytimes.com/interactive/2021/world/covid-cases.html"
+    #URL2 = "https://www.nytimes.com/interactive/2021/world/covid-cases.html"
     
-    URL_list = [URL1, URL2]
+    URL_list = [URL1]#, URL2]
     
     if url not in URL_list:
         raise ValueError("The given url is not an acceptable parameter for this function. Please choose a website from the URL list.")
@@ -66,6 +73,7 @@ def scrape_country(country, url):
         # Put the table into a Pandas data frame.
         df= pd.read_html(str(table), displayed_only=False)[0]
         M, N = df.shape
+        df = df.fillna(0)
         
         # Populate a dicitionary with all the countries and 4 primary statistics.
         country_statistics1 = {}
@@ -78,7 +86,8 @@ def scrape_country(country, url):
                 country_statistics1[df.iloc[i, 1].lower()] = array
             
         # Write the dictionary to a .json file
-        with open('country_statistics1.json', 'w') as f:
+        today = date.today().isoformat()
+        with open('country_statistics1_'+ today + '.json', 'w') as f:
             f.write(json.dumps(country_statistics1))
             
         # return the country's statistics
@@ -88,10 +97,10 @@ def scrape_country(country, url):
         else:    
             return country_statistics1.get(country)
         
-    #elif (url == URL2):
+    # elif (url == URL2):
         
-    # r2 = requests.get(URL2)
-    # soup2 = BeautifulSoup(r2.text, 'html.parser')
+    #     r = requests.get(URL2)
+    #     soup = BeautifulSoup(r.text, 'html.parser')
+    #     table = soup.find('table')
 
-
-    
+d = scrape_country("usa", "https://www.worldometers.info/coronavirus/")
