@@ -12,6 +12,8 @@ USA_deaths = [20000, 21000, 21500]
 Brazil_deaths = [10000, 19000, 20000]
 Italy_deaths = [21000, 21100, 21500]
 
+#practice commit
+
 # create a new plot with a title and axis labels
 p = figure(title="# Deaths vs Days",
 x_axis_type="datetime",
