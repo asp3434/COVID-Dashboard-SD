@@ -9,8 +9,6 @@ from bokeh.layouts import grid, gridplot, row, layout
 from datetime import datetime, timedelta
 import json
 
-
-
 # generate list of dates (today's date in subsequent weeks)
 dates = [(datetime.now() + timedelta(day * 7)) for day in range(0, 3)]
 
@@ -19,8 +17,13 @@ USA_deaths = [20000, 21000, 21500]
 Brazil_deaths = [10000, 19000, 20000]
 Italy_deaths = [21000, 21100, 21500]
 
-f = open('country_statistics1_2022-11-28.json')
-data = json.load(f)
+f1 = open('country_statistics1_2022-11-28.json')
+f2 = open('country_statistics1_2022-11-29.json')
+data1 = json.load(f1)
+data2 = json.load(f2)
+print(data1)
+print(data2)
+
 
 # create a new plot with a title and axis labels
 p = figure(title="# Deaths vs Days",
@@ -45,4 +48,5 @@ website_menu = widgets.Dropdown(label = "Website",
 # show the results
 show(row(p, website_menu))
 
-f.close
+f1.close
+f2.close
