@@ -14,21 +14,17 @@ dates = [(datetime.now() + timedelta(day * 7)) for day in range(0, 3)]
 
 # arrays to take the place of deaths for a certain country  --> the user can input a country and then the    
 USA_deaths = [20000, 21000, 21500]
-Brazil_deaths = [1010001, 1101001, 1110001]
-Italy_deaths = [1001001, 1011001, 1051001]
+Brazil_deaths = [10000, 19000, 20000]
+Italy_deaths = [21000, 21100, 21500]
 
 f1 = open('country_statistics1_2022-11-28.json')
 f2 = open('country_statistics1_2022-11-29.json')
 data1 = json.load(f1)
 data2 = json.load(f2)
-#print(data1)
-#print(data1['usa'][0])
+print(data1)
 #print(data2)
 
-#this is how you can access usa total death data for a specific day
-USA_deaths = [data1['usa'][0], data2['usa'][0],1116900]
-
-#this is how you can access the total deaths for every country in the dictionary
+#this is how you can access all the deaths for every country in the dictionary
 totaldeathkey = 0
 res = [sub[totaldeathkey] for sub in data1.values()]
 print(str(res))
