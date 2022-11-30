@@ -36,7 +36,7 @@ p.line(dates, Italy_deaths, legend_label="Italy", color="green", line_width=2)
 # add date ticks to x axis
 p.xaxis[0].formatter = DatetimeTickFormatter(months="%b %Y")
  
-menu = [("Worldometer", "worldometer")]
+menu = [("Worldometers", "worldometers")]
 
 website_menu = widgets.Dropdown(label = "Website",
                          button_type = "primary",
