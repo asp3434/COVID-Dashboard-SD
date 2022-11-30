@@ -80,10 +80,10 @@ def scrape_country(country: str, url:str):
         for i in range(8, M-1, 1):
             # An array to grab total deaths, new deaths (daily), deaths per million, and deaths per million (daily)
             array = [df.iloc[i, 4], df.iloc[i, 5], df.iloc[i, 11], df.iloc[i, 20] ]
-            if df.iloc[i, 1].lower() == "total:":
+            if str(df.iloc[i, 1]).lower() == "total:":
                 pass
             else:
-                country_statistics1[df.iloc[i, 1].lower()] = array
+                country_statistics1[str(df.iloc[i, 1]).lower()] = array
             
         # Write the dictionary to a .json file
         today = date.today().isoformat()
