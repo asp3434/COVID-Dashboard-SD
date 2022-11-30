@@ -22,8 +22,12 @@ f2 = open('country_statistics1_2022-11-29.json')
 data1 = json.load(f1)
 data2 = json.load(f2)
 print(data1)
-print(data2)
+#print(data2)
 
+#this is how you can access all the deaths for every country in the dictionary
+totaldeathkey = 0
+res = [sub[totaldeathkey] for sub in data1.values()]
+print(str(res))
 
 # create a new plot with a title and axis labels
 p = figure(title="# Deaths vs Days",
