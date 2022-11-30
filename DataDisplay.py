@@ -1,9 +1,14 @@
 # Testing bokeh features. We can combine a script like this with ScrapeWebsite to visualize the data
 
-from datetime import datetime, timedelta
-from bokeh.models import DatetimeTickFormatter, NumeralTickFormatter
+#import bokeh libraries
+from bokeh.models import DatetimeTickFormatter, NumeralTickFormatter, widgets
 from bokeh.plotting import figure, show, curdoc
+from bokeh.layouts import grid, gridplot, row, layout
+
+# other libraries
+from datetime import datetime, timedelta
 import json
+
 
 
 # generate list of dates (today's date in subsequent weeks)
@@ -16,7 +21,6 @@ Italy_deaths = [21000, 21100, 21500]
 
 f = open('country_statistics1_2022-11-28.json')
 data = json.load(f)
-print(data)
 
 # create a new plot with a title and axis labels
 p = figure(title="# Deaths vs Days",
@@ -31,8 +35,14 @@ p.line(dates, Italy_deaths, legend_label="Italy", color="green", line_width=2)
 
 # add date ticks to x axis
 p.xaxis[0].formatter = DatetimeTickFormatter(months="%b %Y")
+ 
+menu = [("Worldometer", "worldometer")]
 
+website_menu = widgets.Dropdown(label = "Website",
+                         button_type = "primary",
+                         menu = menu)
+ 
 # show the results
-show(p)
+show(row(p, website_menu))
 
 f.close
