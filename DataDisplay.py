@@ -4,6 +4,7 @@
 from bokeh.models import DatetimeTickFormatter, NumeralTickFormatter, widgets
 from bokeh.plotting import figure, show, curdoc
 from bokeh.layouts import grid, gridplot, row, layout
+from bokeh.events import MenuItemClick, Event
 
 # other libraries
 from datetime import datetime, timedelta
