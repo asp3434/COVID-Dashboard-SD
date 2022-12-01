@@ -1,5 +1,3 @@
-# Testing bokeh features. We can combine a script like this with ScrapeWebsite to visualize the data
-
 #import bokeh libraries
 from bokeh.models import DatetimeTickFormatter, NumeralTickFormatter, widgets
 from bokeh.plotting import figure, show, curdoc
@@ -15,11 +13,13 @@ from bokeh.plotting import figure, show
 # other libraries
 import datetime
 from datetime import date
-from datetime import timedelta
+from datetime import timedelta, datetime
 import json
 
+# inialize country temp --> change to user input
+country = 'france' 
+
 # initialize stat lists
-country = 'usa' #temp --> change to user input
 tot_deaths = []
 tot_deaths_1m = []
 daily_deaths = []
@@ -30,15 +30,17 @@ start_date = date(2022,11,28)
 end_date = date.today()
 delta = timedelta(days=1)
 
-# start vector of dates for plotting
+# initialize vector of dates for plotting
 all_dates = []
 
-# Loop through each date and make arrays that are each of the four stats over time
+# Loop through each date and make arrays for each of the four stats over time
 while start_date <= end_date:
     # use this if want to print the dates --> print(start_date.strftime("%Y-%m-%d"))
     with open('country_statistics1_'+str(start_date)+'.json') as f:
+        # get country data
         data = json.load(f)
         country_data = data[country]
+        # make lists for each of the stats over all of the dates
         tot_deaths.append(country_data[0])
         tot_deaths_1m.append(country_data[1])
         daily_deaths.append(country_data[2])
@@ -53,24 +55,14 @@ while start_date <= end_date:
 x = [1, 2, 3, 4]
 
 # create a new plot with a title and axis labels
-p = figure(title="Covid Stats Test Plot", x_axis_label="x", y_axis_label="y")
+p = figure(title= "daily deaths for " + str(country), x_axis_label="dates", y_axis_label="# of deaths")
 
-# Plot all stats
+# Plot all stats: Easier to plot one at a time because the numbers are so different
+p.line(x, daily_deaths, legend_label="Objects", color="green", line_width=2)
 #p.line(x, tot_deaths, legend_label="Temp.", color="blue", line_width=2)
 #p.line(x, tot_deaths_1m, legend_label="Rate", color="red", line_width=2)
-p.line(x, daily_deaths, legend_label="Objects", color="green", line_width=2)
 #p.line(x, daily_deaths_1m, legend_label="Objects", color="green", line_width=2)
 
 # show the results
 show(p)
 
-# This is date ticker code that has not been implemented yet:
-# # plot a stat vs date on the x axis using the date tickers using bokeh
-# # create new plot
-# p = figure(title="datetime axis example",x_axis_type="datetime")
-# # add renderers
-# p.line(all_dates, tot_deaths, color="navy", line_width=1)
-# # format axes ticks
-# p.xaxis[0].formatter = DatetimeTickFormatter(months="%b %Y")
-# # show the results
-# show(p)
