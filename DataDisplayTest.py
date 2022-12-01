@@ -30,6 +30,9 @@ start_date = date(2022,11,28)
 end_date = date.today()
 delta = timedelta(days=1)
 
+# start vector of dates for plotting
+all_dates = []
+
 # Loop through each date and make arrays that are each of the four stats over time
 while start_date <= end_date:
     # use this if want to print the dates --> print(start_date.strftime("%Y-%m-%d"))
@@ -40,8 +43,34 @@ while start_date <= end_date:
         tot_deaths_1m.append(country_data[1])
         daily_deaths.append(country_data[2])
         daily_deaths_1m.append(country_data[3])
+    # record all of the dates the loop goes through for plotting
+    all_dates.append(start_date)
     # increment the day
     start_date += delta
+# ADD**: make sure works if skip a day of json file
 
-# ADD: make sure works if skip a day of json file
-# then plot a stat vs date on the x axis using the date tickers using bokeh
+# Temporary x axis  
+x = [1, 2, 3, 4]
+
+# create a new plot with a title and axis labels
+p = figure(title="Covid Stats Test Plot", x_axis_label="x", y_axis_label="y")
+
+# Plot all stats
+#p.line(x, tot_deaths, legend_label="Temp.", color="blue", line_width=2)
+#p.line(x, tot_deaths_1m, legend_label="Rate", color="red", line_width=2)
+p.line(x, daily_deaths, legend_label="Objects", color="green", line_width=2)
+#p.line(x, daily_deaths_1m, legend_label="Objects", color="green", line_width=2)
+
+# show the results
+show(p)
+
+# This is date ticker code that has not been implemented yet:
+# # plot a stat vs date on the x axis using the date tickers using bokeh
+# # create new plot
+# p = figure(title="datetime axis example",x_axis_type="datetime")
+# # add renderers
+# p.line(all_dates, tot_deaths, color="navy", line_width=1)
+# # format axes ticks
+# p.xaxis[0].formatter = DatetimeTickFormatter(months="%b %Y")
+# # show the results
+# show(p)
