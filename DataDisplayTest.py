@@ -15,33 +15,33 @@ from bokeh.plotting import figure, show
 # other libraries
 import datetime
 from datetime import date
+from datetime import timedelta
 import json
 
 # initialize stat lists
-country = 'usa' #temp
+country = 'usa' #temp --> change to user input
 tot_deaths = []
 tot_deaths_1m = []
 daily_deaths = []
 daily_deaths_1m = []
-x_axis_dates = [datetime.date(2022,11,30)]
-country_data = []
-data = []
-# ** need to index all of the json files up to today --> change this
-past_date = datetime.date(2022,11,28)
-current_date = date.today()
-print(current_date)
 
-# loop through all of the json files for dates up to current date using time delta
-# add timedelta day up to current date starting at 11-28
+# initialize json file date range that will be indexed from
+start_date = date(2022,11,28)
+end_date = date.today()
+delta = timedelta(days=1)
 
-with open('country_statistics1_'+str(past_date)+'.json') as f:
-    data = json.load(f)
-    country_data= data[country]
-    tot_deaths = country_data[0]
-    tot_deaths_1m = country_data[1]
-    daily_deaths = country_data[2]
-    daily_deaths_1m = country_data[3]
+# Loop through each date and make arrays that are each of the four stats over time
+while start_date <= end_date:
+    # use this if want to print the dates --> print(start_date.strftime("%Y-%m-%d"))
+    with open('country_statistics1_'+str(start_date)+'.json') as f:
+        data = json.load(f)
+        country_data = data[country]
+        tot_deaths.append(country_data[0])
+        tot_deaths_1m.append(country_data[1])
+        daily_deaths.append(country_data[2])
+        daily_deaths_1m.append(country_data[3])
+    # increment the day
+    start_date += delta
 
-print(country_data)
-
+# ADD: make sure works if skip a day of json file
 # then plot a stat vs date on the x axis using the date tickers using bokeh
