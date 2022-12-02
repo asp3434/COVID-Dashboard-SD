@@ -1,3 +1,5 @@
+# This script takes data from the json files for a certain country and then plots any of the four statistics
+
 #import bokeh libraries
 from bokeh.models import DatetimeTickFormatter, NumeralTickFormatter, widgets
 from bokeh.plotting import figure, show, curdoc
@@ -15,9 +17,10 @@ import datetime
 from datetime import date
 from datetime import timedelta, datetime
 import json
+import string
 
 # inialize country temp --> change to user input
-country = 'france' 
+country = 'japan' 
 
 # initialize stat lists
 tot_deaths = []
@@ -45,23 +48,26 @@ while start_date <= end_date:
         tot_deaths_1m.append(country_data[1])
         daily_deaths.append(country_data[2])
         daily_deaths_1m.append(country_data[3])
+    # convert dates to datetimes so bokeh dateticks on the x axis will work
+    dateString = str(start_date)
+    dateList = dateString.split('-')
+    start_timeDate = datetime(int(dateList[0]), int(dateList[1]), int(dateList[2]))
     # record all of the dates the loop goes through for plotting
-    all_dates.append(start_date)
+    all_dates.append(start_timeDate)
     # increment the day
     start_date += delta
 # ADD**: make sure works if skip a day of json file
 
-# Temporary x axis  
-x = [1, 2, 3, 4]
+# create new plot
+p = figure(title="daily deaths in " + str(country) + " vs time", 
+    x_axis_label='date', y_axis_label='daily deaths', x_axis_type="datetime",
+    sizing_mode="stretch_width",max_width=700,height=400,)
 
-# create a new plot with a title and axis labels
-p = figure(title= "daily deaths for " + str(country), x_axis_label="dates", y_axis_label="# of deaths")
+# add line
+p.line(all_dates, daily_deaths, color="navy", line_width=1)
 
-# Plot all stats: Easier to plot one at a time because the numbers are so different
-p.line(x, daily_deaths, legend_label="Objects", color="green", line_width=2)
-#p.line(x, tot_deaths, legend_label="Temp.", color="blue", line_width=2)
-#p.line(x, tot_deaths_1m, legend_label="Rate", color="red", line_width=2)
-#p.line(x, daily_deaths_1m, legend_label="Objects", color="green", line_width=2)
+# format x axis date ticks
+p.xaxis[0].formatter = DatetimeTickFormatter(days="%m / %d")
 
 # show the results
 show(p)

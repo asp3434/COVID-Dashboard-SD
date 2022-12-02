@@ -5,7 +5,7 @@ from bokeh.models import DatetimeTickFormatter, NumeralTickFormatter
 from bokeh.plotting import figure, show
 
 # generate list of dates (today's date in subsequent weeks)
-dates = [(datetime.now() + timedelta(day * 7)) for day in range(0, 26)]
+dates = [(datetime.today() + timedelta(day * 7)) for day in range(0, 26)]
 
 # generate 25 random data points
 y = random.sample(range(0, 100), 26)
