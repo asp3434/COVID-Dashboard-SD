@@ -6,11 +6,16 @@ from bokeh.plotting import figure, show, curdoc
 from bokeh.layouts import grid, gridplot, row, layout
 from bokeh.events import MenuItemClick, Event
 from ScrapeWebsite import scrape_country
+from bokeh.models import CustomJS, MultiSelect
+from bokeh.io import show
+from bokeh.models import CustomJS, TextInput
 
 # date modules
 from datetime import datetime, timedelta
 from bokeh.models import DatetimeTickFormatter, NumeralTickFormatter
-from bokeh.plotting import figure, show
+
+from bokeh.io import output_file, show
+from bokeh.models.widgets import Select
 
 # other libraries
 import datetime
@@ -19,8 +24,9 @@ from datetime import timedelta, datetime
 import json
 import string
 
-# inialize country temp --> change to user input
-country = 'japan' 
+# **Need widget with callback here so the country = user text input
+# **And then need to allow multiple plots and selection of each of the four stats
+country = "japan"
 
 # initialize stat lists
 tot_deaths = []
@@ -48,11 +54,11 @@ while start_date <= end_date:
         tot_deaths_1m.append(country_data[1])
         daily_deaths.append(country_data[2])
         daily_deaths_1m.append(country_data[3])
-    # convert dates to datetimes so bokeh dateticks on the x axis will work
+    # convert dates to datetimes so bokeh dateticks on the x axis will work (this is for plotting only)
     dateString = str(start_date)
     dateList = dateString.split('-')
     start_timeDate = datetime(int(dateList[0]), int(dateList[1]), int(dateList[2]))
-    # record all of the dates the loop goes through for plotting
+    # record all of the dates the loop goes through (this is for plotting only) 
     all_dates.append(start_timeDate)
     # increment the day
     start_date += delta
@@ -69,6 +75,6 @@ p.line(all_dates, daily_deaths, color="navy", line_width=1)
 # format x axis date ticks
 p.xaxis[0].formatter = DatetimeTickFormatter(days="%m / %d")
 
-# show the results
+# # show the results
 show(p)
 
