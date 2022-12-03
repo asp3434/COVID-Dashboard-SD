@@ -22,7 +22,7 @@ f1 = open('country_statistics1_2022-11-28.json')
 f2 = open('country_statistics1_2022-11-29.json')
 data1 = json.load(f1)
 data2 = json.load(f2)
-print(data1)
+#print(data1)
 #print(data2)
 
 #this is how you can access all the deaths for every country in the dictionary
