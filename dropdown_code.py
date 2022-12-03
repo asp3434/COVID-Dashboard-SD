@@ -1,7 +1,8 @@
 from bokeh.io import show
-from bokeh.models import Dropdown, SetValue, CustomJS
+from bokeh.models import Dropdown, SetValue, CustomJS, Select
 from bokeh.layouts import row
 from bokeh.events import Event
+from bokeh.events import ButtonClick
 
 import json
 
@@ -32,8 +33,27 @@ country_menu = Dropdown(
     menu = country_menu_array
 )
 
-country_callback = SetValue(obj=country_menu, attr='label', value= "Country Selected")
-country_menu.js_on_event('menu_item_click', country_callback)
+#def grabcountryname(event):
+#    if event.item in country_menu_array:
+        
+#country_callback = SetValue(obj=country_menu, attr='label', value= "country selected")
+#country_menu.js_on_change('value', country_callback)
+
+select_country = Select(title="Select Country:",  
+                options= country_menu_array)
+
+select_country.js_on_change("value", CustomJS(code="""
+    console.log('select: value=' + this.value, this.toString())
+"""))
+
+select_website = Select(title="Select Website:",  
+                options= web_menu_array)
+
+select_website.js_on_change("value", CustomJS(code="""
+    console.log('select: value=' + this.value, this.toString())
+"""))
 
 
-show(row(website_menu, country_menu))
+
+
+show(row(select_website, select_country))
