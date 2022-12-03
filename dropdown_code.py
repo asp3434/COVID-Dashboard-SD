@@ -44,5 +44,17 @@ select_website = Select(title="Select Website:",
 select_website.js_on_change("value", CustomJS(code="""
     console.log('select: value=' + this.value, this.toString())"""))
 
+layout = row(select_website, select_country)
+show(layout)
 
-show(row(select_website, select_country))
+#attempt to update plot
+
+def update_plot(attr, old, new):
+    #get selected value
+    country = select_country.value
+    #Create new data
+    country_data.data = data(country)
+
+select_country.on_change("value", update_plot)
+
+

@@ -1,7 +1,7 @@
 # This script takes data from the json files for a certain country and then plots any of the four statistics
 
 #import bokeh libraries
-from bokeh.models import DatetimeTickFormatter, NumeralTickFormatter, widgets
+from bokeh.models import DatetimeTickFormatter, NumeralTickFormatter, widgets, Select
 from bokeh.plotting import figure, show, curdoc
 from bokeh.layouts import grid, gridplot, row, layout
 from bokeh.events import MenuItemClick, Event
@@ -27,6 +27,29 @@ import string
 # **Need widget with callback here so the country = user text input
 # **And then need to allow multiple plots and selection of each of the four stats
 country = "japan"
+
+web_menu_array = [("Worldometers", "worldometers")]
+
+f = open('country_statistics1_2022-11-28.json')
+data = json.load(f)
+
+keys = data.keys()
+country_menu_array = []
+for i in keys:
+    country_menu_array.append((i[0].upper() + i[1:-1] + i[-1], i))
+
+select_country = Select(title="Select Country:",  
+                options= country_menu_array)
+select_country.js_on_change("value", CustomJS(code="""
+    console.log('select: value=' + this.value, this.toString())"""))
+
+select_website = Select(title="Select Website:",  
+                options= web_menu_array)
+select_website.js_on_change("value", CustomJS(code="""
+    console.log('select: value=' + this.value, this.toString())"""))
+
+show(row(select_website, select_country))
+
 
 # initialize stat lists
 tot_deaths = []
