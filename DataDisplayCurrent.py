@@ -38,12 +38,14 @@ country_menu_array = []
 for i in keys:
     country_menu_array.append((i[0].upper() + i[1:-1] + i[-1], i))
 
-select_country = Select(title="Select Country:",  
+select_country = Select(title="Select Country:",
+                value = country_menu_array,
                 options= country_menu_array)
 select_country.js_on_change("value", CustomJS(code="""
     console.log('select: value=' + this.value, this.toString())"""))
 
-select_website = Select(title="Select Website:",  
+select_website = Select(title="Select Website:",
+                value = country_menu_array,
                 options= web_menu_array)
 select_website.js_on_change("value", CustomJS(code="""
     console.log('select: value=' + this.value, this.toString())"""))
