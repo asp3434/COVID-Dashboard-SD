@@ -9,6 +9,12 @@ from datetime import datetime, timedelta
 import json
 import string
 
+# other libraries
+import datetime
+from datetime import date
+from datetime import timedelta, datetime
+import json
+import string
 
 # initialize json file date range that will be indexed from
 start_date = date(2022,11,28)
