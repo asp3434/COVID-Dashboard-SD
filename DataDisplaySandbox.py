@@ -47,7 +47,6 @@ def make_dataset(country, start_date, end_date):
     
 # ADD**: make sure works if skip a day of json file
 
-
 #create a function that returns a figure object
 def make_plot(src):
     p = figure(title="daily deaths in " + str(country) + " vs time", 
