@@ -28,29 +28,29 @@ import string
 # **And then need to allow multiple plots and selection of each of the four stats
 country = "japan"
 
-web_menu_array = [("Worldometers", "worldometers")]
+# web_menu_array = [("Worldometers", "worldometers")]
 
-f = open('country_statistics1_2022-11-28.json')
-data = json.load(f)
+# f = open('country_statistics1_2022-11-28.json')
+# data = json.load(f)
 
-keys = data.keys()
-country_menu_array = []
-for i in keys:
-    country_menu_array.append((i[0].upper() + i[1:-1] + i[-1], i))
+# keys = data.keys()
+# country_menu_array = []
+# for i in keys:
+#     country_menu_array.append((i[0].upper() + i[1:-1] + i[-1], i))
 
-select_country = Select(title="Select Country:",
-                value = country_menu_array,
-                options= country_menu_array)
-select_country.js_on_change("value", CustomJS(code="""
-    console.log('select: value=' + this.value, this.toString())"""))
+# select_country = Select(title="Select Country:",
+#                 value = country_menu_array,
+#                 options= country_menu_array)
+# select_country.js_on_change("value", CustomJS(code="""
+#     console.log('select: value=' + this.value, this.toString())"""))
 
-select_website = Select(title="Select Website:",
-                value = country_menu_array,
-                options= web_menu_array)
-select_website.js_on_change("value", CustomJS(code="""
-    console.log('select: value=' + this.value, this.toString())"""))
+# select_website = Select(title="Select Website:",
+#                 value = country_menu_array,
+#                 options= web_menu_array)
+# select_website.js_on_change("value", CustomJS(code="""
+#     console.log('select: value=' + this.value, this.toString())"""))
 
-show(row(select_website, select_country))
+# show(row(select_website, select_country))
 
 
 # initialize stat lists
@@ -103,3 +103,7 @@ p.xaxis[0].formatter = DatetimeTickFormatter(days="%m / %d")
 # # show the results
 show(p)
 
+print("Dates")
+print(all_dates)
+print("Deaths")
+print(daily_deaths)
