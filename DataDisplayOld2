@@ -1,7 +1,11 @@
 
 # This script takes data from the json files for a certain country and then plots any of the four statistics
 
-#import bokeh libraries
+# NEED:
+# 1. Allow user to pick country and pick a stat for the country --> then plot stat over time (working in script, need UI for bokeh)
+# 2. Allow user to compare multiple plots for country stats over time on the same graph  (need in script and bokeh)
+
+#import modules
 from bokeh.models import DatetimeTickFormatter, NumeralTickFormatter, widgets, Select
 from bokeh.plotting import figure, show, curdoc
 from bokeh.layouts import grid, gridplot, row, layout
@@ -10,20 +14,17 @@ from ScrapeWebsite import scrape_country
 from bokeh.models import CustomJS, MultiSelect
 from bokeh.io import show
 from bokeh.models import CustomJS, TextInput
-
-# date modules
-from datetime import datetime, timedelta
 from bokeh.models import DatetimeTickFormatter, NumeralTickFormatter
-
 from bokeh.io import output_file, show
 from bokeh.models.widgets import Select
+import json
+import string
 
-# other libraries
+# Date modules
 import datetime
 from datetime import date
 from datetime import timedelta, datetime
-import json
-import string
+from datetime import datetime, timedelta
 
 country = "france"
 
