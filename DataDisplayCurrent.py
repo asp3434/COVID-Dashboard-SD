@@ -36,12 +36,17 @@ from datetime import timedelta, datetime
 from datetime import datetime, timedelta
 
 colors = ['blue', 'green', 'red']
+
+# user input: countries and stat
+countries = ["usa", "brazil", "france"]
+stats_choices = ['total deaths', '(total deaths)/1m', 'daily deaths', '(daily deaths)/1m']
+stat_choice = stats_choices[3]
+
 # create new plot
-p = figure(title="daily deaths in vs time", 
-    x_axis_label='date', y_axis_label='daily deaths', x_axis_type="datetime",
+p = figure(title=stat_choice + " vs time", 
+    x_axis_label='date', y_axis_label=stat_choice, x_axis_type="datetime",
     sizing_mode="stretch_width",max_width=700,height=400,)
 
-countries = ["usa", "brazil", "japan", "china", "spain", "germany"]
 
 # for color indexing
 i = 0
@@ -99,7 +104,10 @@ for country in countries:
             g = green,
             b = blue)
         # add line
-        p.line(all_dates, daily_deaths, legend_label=country,color=color_rand, line_width=1)
+        stats_dict = {'total deaths' : tot_deaths, '(total deaths)/1m' : tot_deaths_1m, 
+        '(daily deaths)' : daily_deaths, '(daily deaths)/1m' : daily_deaths_1m}
+
+        p.line(all_dates, stats_dict[stat_choice], legend_label=country,color=color_rand, line_width=1)
 
         # format x axis date ticks
         p.xaxis[0].formatter = DatetimeTickFormatter(days="%m / %d")
