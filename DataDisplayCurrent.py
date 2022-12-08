@@ -1,4 +1,3 @@
-
 # This script lets user choose the contries and statistic desired and then plots the data
 
 # NEED:
@@ -21,7 +20,7 @@ from datetime import timedelta, datetime, date
 # user input: countries and stat
 countries = ['usa', 'brazil', 'japan']
 stats_choices = ['total deaths', '(total deaths)/1m', 'daily deaths', '(daily deaths)/1m']
-stat_choice = stats_choices[3]
+stat_choice = stats_choices[1]
 
 # create new plot
 p = figure(title=stat_choice + " vs time", 
@@ -85,7 +84,7 @@ for country in countries:
         
         # dictionary to convert user input into the array containing the data for the user selected statistic
         stats_dict = {'total deaths' : tot_deaths, '(total deaths)/1m' : tot_deaths_1m, 
-        '(daily deaths)' : daily_deaths, '(daily deaths)/1m' : daily_deaths_1m}
+        'daily deaths' : daily_deaths, '(daily deaths)/1m' : daily_deaths_1m}
 
         # add line
         p.line(all_dates, stats_dict[stat_choice], legend_label=country,color=color_rand, line_width=1)
