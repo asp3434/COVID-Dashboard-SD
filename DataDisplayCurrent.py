@@ -75,9 +75,9 @@ for country in countries:
         x1 = random.random()
         x2 = random.random()
         x3 = random.random()
-        red = 255*x1
-        green = 255*x2
-        blue = 255*x3
+        red = 255.0 *x1
+        green = 255.0*x2
+        blue = 255.0*x3
         color_rand = RGB(r = red,
             g = green,
             b = blue)
