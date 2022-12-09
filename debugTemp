@@ -1,0 +1,6 @@
+from datetime import date
+start_date = date(2022,11,28)
+with open('country_statistics1_'+str(start_date)+'.json') as f:
+                data = json.load(f)
+                country_data = data[country]
+                print(country_data)
