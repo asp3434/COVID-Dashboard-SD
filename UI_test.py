@@ -6,6 +6,7 @@ from bokeh.plotting import figure, show
 from bokeh.sampledata.autompg2 import autompg2 as mpg
 
 source = ColumnDataSource(mpg)
+print(mpg)
 
 manufacturers = sorted(mpg["manufacturer"].unique())
 

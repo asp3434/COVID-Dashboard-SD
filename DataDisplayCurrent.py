@@ -22,6 +22,8 @@ import random
 import datetime
 from datetime import timedelta, datetime, date
 
+print("Code is running...")
+
 # user input: countries and stat
 f = open('country_statistics1_2022-11-28.json')
 data1 = json.load(f)
@@ -38,7 +40,7 @@ p = figure(title=stat_choice + " vs time",
     sizing_mode="stretch_width",max_width=700,height=400,)
 
 # data frame arrays
-df_total_deaths_ = []
+df_total_deaths = []
 df_total_deaths_1m = []
 df_daily_deaths = []
 df_daily_deaths_1m = []
@@ -111,28 +113,37 @@ for country in countries:
         # format x axis date ticks
         p.xaxis[0].formatter = DatetimeTickFormatter(days="%m / %d")
     
+    df_total_deaths.append(tot_deaths)
+    df_total_deaths_1m.append(tot_deaths_1m)
+    df_daily_deaths.append(daily_deaths)
+    df_daily_deaths_1m.append(daily_deaths_1m)
     
-df_dict = {}
+df_dict = {"country": countries,
+           "total_deaths": df_total_deaths,
+           "new_deaths_daily": df_daily_deaths,
+           "deaths_per_mil" : df_total_deaths_1m,
+           "deaths_per_mil_daily" : df_daily_deaths_1m
+    }
 
 # Create table
-# source = ColumnDataSource(pd.DataFrame
+source = ColumnDataSource(df_dict)
 
-# columns = [
-#     TableColumn(field="country", title="Country",
-#                 # editor=SelectEditor(options=manufacturers),
-#                 formatter=StringFormatter(font_style="bold")),
-#     TableColumn(field="total_deaths", title="Total Deaths", editor=IntEditor()),
-#     TableColumn(field="new_deaths_daily", title="Daily New Deaths", editor=IntEditor()),
-#     TableColumn(field="deaths_per_mil", title="Total Deaths per Million", editor=IntEditor()),
-#     TableColumn(field="deaths_per_mil_daily", title="Daily Deaths per Million", editor=IntEditor()),
-# ]
-# data_table = DataTable(source=source, columns=columns, editable=True, width=800,
-#                        index_position=-1, index_header="row index", index_width=60)
+columns = [
+    TableColumn(field="country", title="Country",
+                # editor=SelectEditor(options=countries),
+                formatter=StringFormatter(font_style="bold")),
+    TableColumn(field="total_deaths", title="Total Deaths", editor=IntEditor()),
+    TableColumn(field="new_deaths_daily", title="Daily New Deaths", editor=IntEditor()),
+    TableColumn(field="deaths_per_mil", title="Total Deaths per Million", editor=IntEditor()),
+    TableColumn(field="deaths_per_mil_daily", title="Daily Deaths per Million", editor=IntEditor()),
+]
+
+data_table = DataTable(source=source, columns=columns, editable=False, width=800,
+                       index_position=-1, index_header="row index", index_width=60)
 
 # p.legend.click_policy="hide"
 
 # p.add_layout(mytext)
 
 # show the results in a new tab
-# show(column(p, data_table))
-show(p)
+show(column(p, data_table))
