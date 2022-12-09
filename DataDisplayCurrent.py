@@ -18,7 +18,7 @@ import datetime
 from datetime import timedelta, datetime, date
 
 # user input: countries and stat
-countries = ['usa', 'brazil', 'japan']
+countries = ['usa', 'brazil', 'japan', 'russia', 'australia', 'france']
 stats_choices = ['total deaths', '(total deaths)/1m', 'daily deaths', '(daily deaths)/1m']
 stat_choice = stats_choices[1]
 
@@ -91,6 +91,10 @@ for country in countries:
 
         # format x axis date ticks
         p.xaxis[0].formatter = DatetimeTickFormatter(days="%m / %d")
-        
+
+p.legend.click_policy="hide"
+
+#p.add_layout(mytext)
+
 # show the results in a new tab
 show(p)
