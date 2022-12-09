@@ -12,7 +12,7 @@ from bokeh.models import (ColumnDataSource, DataTable, HoverTool, IntEditor,
                           NumberEditor, NumberFormatter, SelectEditor,
                           StringEditor, StringFormatter, TableColumn)
 from bokeh.colors import RGB
-from bokeh.layouts import column, row
+from bokeh.layouts import column, row, gridplot
 
 import pandas as pd
 
@@ -32,12 +32,20 @@ countries = list(data1.keys())
 
 # countries = ['usa', 'brazil', 'japan', 'russia', 'australia', 'france']
 stats_choices = ['total deaths', '(total deaths)/1m', 'daily deaths', '(daily deaths)/1m']
-stat_choice = stats_choices[1]
 
 # create new plot
-p = figure(title=stat_choice + " vs time", 
-    x_axis_label='date mm/yy', y_axis_label=stat_choice, x_axis_type="datetime",
-    sizing_mode="stretch_width",max_width=700,height=400,)
+p1 = figure(title= "Total Deaths" + " vs Time", 
+    x_axis_label='Date mm/yy', y_axis_label="Total Deaths", x_axis_type="datetime"
+    ,width=700,height=400,)
+p2 = figure(title="Total Deaths per Million" + " vs Time", 
+    x_axis_label='Date mm/yy', y_axis_label="Total Deaths per Million", x_axis_type="datetime"
+    ,width=700,height=400,)
+p3 = figure(title="Daily Deaths" + " vs Time", 
+    x_axis_label='Date mm/yy', y_axis_label="Daily Deaths", x_axis_type="datetime"
+    ,width=700,height=400,)
+p4 = figure(title="Daily Deaths per Million" + " vs Time", 
+    x_axis_label='Date mm/yy', y_axis_label="Daily Deaths per Million", x_axis_type="datetime"
+    ,width=700,height=400,)
 
 # data frame arrays
 df_total_deaths = []
@@ -88,35 +96,40 @@ for country in countries:
         all_dates.append(start_timeDate)
         # increment the day
         start_date += delta
-
-        # generate a random color for each country being plotted
-        x1 = random.random()
-        x2 = random.random()
-        x3 = random.random()
-        red = 255.0 *x1
-        green = 255.0*x2
-        blue = 255.0*x3
-        color_rand = RGB(r = red,
-            g = green,
-            b = blue)
-        
-        
         
         # dictionary to convert user input into the array containing the data for the user selected statistic
-        stats_dict = {'total deaths' : tot_deaths, '(total deaths)/1m' : tot_deaths_1m, 
-        'daily deaths' : daily_deaths, '(daily deaths)/1m' : daily_deaths_1m}
-
-        # add line
-        # p.line(all_dates, stats_dict[stat_choice], legend_label=country,color=color_rand, line_width=1)
-        p.line(all_dates, stats_dict[stat_choice],color=color_rand, line_width=1)
-
-        # format x axis date ticks
-        p.xaxis[0].formatter = DatetimeTickFormatter(days="%m / %d")
+        # stats_dict = {'total deaths' : tot_deaths, '(total deaths)/1m' : tot_deaths_1m, 
+        # 'daily deaths' : daily_deaths, '(daily deaths)/1m' : daily_deaths_1m}
+        
+    # generate a random color for each country being plotted
+    x1 = random.random()
+    x2 = random.random()
+    x3 = random.random()
+    red = 255.0 *x1
+    green = 255.0*x2
+    blue = 255.0*x3
+    color_rand = RGB(r = red,
+        g = green,
+        b = blue)
     
+    # updating arrays for table outside the for loop
     df_total_deaths.append(tot_deaths)
     df_total_deaths_1m.append(tot_deaths_1m)
     df_daily_deaths.append(daily_deaths)
     df_daily_deaths_1m.append(daily_deaths_1m)
+    
+    # add line
+    # p.line(all_dates, stats_dict[stat_choice], legend_label=country,color=color_rand, line_width=1)
+    p1.circle(all_dates, tot_deaths, line_color=color_rand)
+    p2.circle(all_dates, tot_deaths_1m, line_color=color_rand)
+    p3.circle(all_dates, daily_deaths, line_color=color_rand)
+    p4.circle(all_dates, daily_deaths_1m, line_color=color_rand)
+    
+    # format x axis date ticks
+    p1.xaxis[0].formatter = DatetimeTickFormatter(days="%m / %d")
+    p2.xaxis[0].formatter = DatetimeTickFormatter(days="%m / %d")
+    p3.xaxis[0].formatter = DatetimeTickFormatter(days="%m / %d")
+    p4.xaxis[0].formatter = DatetimeTickFormatter(days="%m / %d")
     
 df_dict = {"country": countries,
            "total_deaths": df_total_deaths,
@@ -146,4 +159,4 @@ data_table = DataTable(source=source, columns=columns, editable=False, width=800
 # p.add_layout(mytext)
 
 # show the results in a new tab
-show(column(p, data_table))
+show(column(gridplot([[p1, p2], [p3, p4]]), data_table))
